@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.springframework.org/schema/webflow
+http://www.springframework.org/schema/webflow/spring-webflow-2.4.xsd">
+
+	<var name="cart" class="com.shoes.MyController"/>
+	
+	<action-state id="TestLogin">
+ 		<evaluate expression="cart.test()"/>
+ 			<transition to="DisplayCart" on="loggedin" />
+        	<transition to="LoginPage" on="notloggedin" />
+ 	</action-state>
+ 	
+ 	<view-state id="LoginPage" view="/WEB-INF/views/login.jsp"/>
+ 
+ 	<view-state id="DisplayCart" view="/WEB-INF/views/flows/DisplayCart.jsp">
+		<transition to="BillingAddress" on="goToPage2" />
+	</view-state>
+	
+	<view-state id="BillingAddress" view="/WEB-INF/views/flows/BillingAddress.jsp">
+		<transition to="DisplayCart" on="goToPage1" />
+		<transition to="Invoice" on="goToPage3" />
+	</view-state>
+	
+	<view-state id="Invoice" view="/WEB-INF/views/flows/Invoice.jsp">
+		<transition to="BillingAddress" on="goToPage2" />
+		<transition to="Thankyou" on="goToPage4" />
+	</view-state>
+	 
+	 <view-state id="Thankyou" view="/WEB-INF/views/flows/Thankyou.jsp">
+		<transition to="Invoice" on="goToPage3" />
+	</view-state>
+	
+	<end-state id="confirmOrder" view="/WEB-INF/views/flows/ThankYou.jsp"/>
+	
+</flow>
